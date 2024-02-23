@@ -1,13 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 
 namespace AdventOfCode.Year2015.Days.Day22;
 
 public class Instructions(int year, int day) : Abstractions.Instructions(year, day)
 {
-    private string[] _input = [];
-
     public override object PerformPartOne()
     {
         throw new NotImplementedException();
@@ -20,6 +16,6 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
 
     protected override void LoadInput(string filePath)
     {
-        _input = File.ReadAllLines(filePath);
+        // Let's do nothing here this time.
     }
 }
