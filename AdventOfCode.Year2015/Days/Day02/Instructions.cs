@@ -22,7 +22,5 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
             .Sum();
 
     protected override void LoadInput(string filePath)
-    {
-        _input = File.ReadAllLines(filePath);
-    }
+        => _input = File.ReadAllLines(filePath);
 }

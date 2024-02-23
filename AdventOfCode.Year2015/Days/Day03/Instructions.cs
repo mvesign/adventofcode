@@ -38,9 +38,7 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
     }
 
     protected override void LoadInput(string filePath)
-    {
-        _input = File.ReadAllText(filePath);
-    }
+        => _input = File.ReadAllText(filePath);
 
     private (int x, int y) ProcessDirection((int x, int y) current, char direction)
     {
@@ -50,8 +48,8 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
         return NextHouse(current.x, current.y, direction);
     }
 
-    private static (int x, int y) NextHouse(int x, int y, char direction) =>
-        direction switch
+    private static (int x, int y) NextHouse(int x, int y, char direction)
+        => direction switch
         {
             '^' => (x, y + 1),
             '>' => (x + 1, y),

@@ -26,7 +26,5 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
     }
 
     protected override void LoadInput(string filePath)
-    {
-        _input = File.ReadAllText(filePath);
-    }
+        => _input = File.ReadAllText(filePath);
 }
