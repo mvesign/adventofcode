@@ -55,7 +55,7 @@ internal static class Program
             return null;
         }
 
-        var instructions = (Instructions?)Activator.CreateInstance(type, new object[] { year, day });
+        var instructions = (Instructions?)Activator.CreateInstance(type, [year, day]);
         if (instructions == null)
         {
             Console.WriteLine($"ERROR: Could not create instructions for year '{year}' and day '{day:00}'");

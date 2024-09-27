@@ -10,7 +10,7 @@ public abstract class Instructions(int year, int day)
     public void LoadInput()
         => LoadInput(
             Path.Combine(
-                Directory.GetCurrentDirectory(), $"AdventOfCode.Year{Year}", "Days", $"Day{Day:00}", "input.txt"
+                Directory.GetCurrentDirectory(), "..\\", $"AdventOfCode.Year{Year}", "Days", $"Day{Day:00}", "input.txt"
             )
         );
 
