@@ -1,21 +1,20 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 
 namespace AdventOfCode.Year2015.Days.Day10;
 
-public class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public class Instructions() : Abstractions.Instructions(year: 2015, day: 10)
 {
     private string _input = string.Empty;
 
-    public override object PerformPartOne()
-        => Perform(40).Length;
+    public  override void LoadInput() =>
+        _input = ReadAllText();
 
-    public override object PerformPartTwo()
-        => Perform(50).Length;
+    public override object PerformPartOne() =>
+        Perform(40).Length;
 
-    protected override void LoadInput(string filePath)
-        => _input = File.ReadAllText(filePath);
+    public override object PerformPartTwo() =>
+        Perform(50).Length;
 
     private string Perform(int count)
         => Enumerable.Range(0, count).Aggregate(_input, (current, _) => LookAndSay(current));

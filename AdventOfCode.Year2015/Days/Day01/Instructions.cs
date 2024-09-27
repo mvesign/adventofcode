@@ -1,14 +1,16 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 
 namespace AdventOfCode.Year2015.Days.Day01;
 
-public class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public class Instructions() : Abstractions.Instructions(year: 2015, day: 1)
 {
     private string _input = string.Empty;
 
-    public override object PerformPartOne()
-        => _input.Sum(_ => _ == '(' ? 1 : -1);
+    public override void LoadInput() =>
+        _input = ReadAllText();
+
+    public override object PerformPartOne() =>
+        _input.Sum(_ => _ == '(' ? 1 : -1);
 
     public override object PerformPartTwo()
     {
@@ -24,7 +26,4 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
 
         return position;
     }
-
-    protected override void LoadInput(string filePath)
-        => _input = File.ReadAllText(filePath);
 }

@@ -1,18 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Year2015.Days.Day19;
 
-public partial class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public partial class Instructions() : Abstractions.Instructions(year: 2015, day: 19)
 {
     private Replacement[] _input = [];
     private string _molecule = string.Empty;
 
-    public override object PerformPartOne()
-        => _input
+    public override void LoadInput()
+    {
+        var lines = ReadAllLines();
+        _molecule = lines[^1];
+        _input = lines
+            .Select(_ => GeneratedRegex().Match(_).Groups)
+            .Where(_ => _[0].Success)
+            .Select(_ => new Replacement(_[1].Value, _[2].Value))
+            .ToArray();
+    }
+
+    public override object PerformPartOne() =>
+        _input
             .Select(ReplaceMolecule)
             .SelectMany(_ => _)
             .Distinct()
@@ -44,17 +54,6 @@ public partial class Instructions(int year, int day) : Abstractions.Instructions
             }
         }
         return mutations;
-    }
-
-    protected override void LoadInput(string filePath)
-    {
-        var lines = File.ReadAllLines(filePath);
-        _molecule = lines[^1];
-        _input = lines
-            .Select(_ => GeneratedRegex().Match(_).Groups)
-            .Where(_ => _[0].Success)
-            .Select(_ => new Replacement(_[1].Value, _[2].Value))
-            .ToArray();
     }
 
     IEnumerable<string> ReplaceMolecule(Replacement replacement) =>

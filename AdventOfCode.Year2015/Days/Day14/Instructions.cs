@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Year2015.Days.Day14;
 
-public partial class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public partial class Instructions() : Abstractions.Instructions(year: 2015, day: 14)
 {
     private List<Reindeer> _input = [];
 
     private const int seconds = 2503;
 
-    public override object PerformPartOne()
-        => _input.Select(GetDistance).Max();
+    public override object PerformPartOne() =>
+        _input.Select(GetDistance).Max();
 
     public override object PerformPartTwo()
     {
@@ -28,8 +27,8 @@ public partial class Instructions(int year, int day) : Abstractions.Instructions
         return _input.Max(_ => _.Score);
     }
 
-    protected override void LoadInput(string filePath)
-        => _input = File.ReadAllLines(filePath)
+    public override void LoadInput() =>
+        _input = ReadAllLines()
             .Select(_ => GeneratedRegex().Match(_).Groups)
             .Select(_ => new Reindeer(int.Parse(_[2].Value), int.Parse(_[3].Value), int.Parse(_[4].Value)))
             .ToList();

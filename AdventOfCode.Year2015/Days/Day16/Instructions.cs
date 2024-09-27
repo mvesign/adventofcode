@@ -1,10 +1,9 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Year2015.Days.Day16;
 
-public partial class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public partial class Instructions() : Abstractions.Instructions(year: 2015, day: 16)
 {
     private InputLine[] _input = [];
     private readonly Section[] _sections = [
@@ -20,25 +19,8 @@ public partial class Instructions(int year, int day) : Abstractions.Instructions
         new ("perfumes", 1)
     ];
 
-    public override object PerformPartOne()
-        => _input
-            .Single(_ => _.Sections.All(kvp => _sections.First(s => s.Name == kvp.Key).Value == kvp.Value))
-            .Number;
-
-    public override object PerformPartTwo()
-        => _input
-            .Single(_ => _.Sections.All(kvp =>
-            {
-                var section = _sections.First(s => s.Name == kvp.Key);
-                return !section.Greater && !section.Fewer && section.Value == kvp.Value
-                    || section.Greater && section.Value < kvp.Value
-                    || section.Fewer && section.Value > kvp.Value;
-            }))
-            .Number;
-
-    protected override void LoadInput(string filePath)
-    {
-        _input = File.ReadAllLines(filePath)
+    public override void LoadInput() =>
+        _input = ReadAllLines()
             .Select(_ => FirstGeneratedRegex().Match(_).Groups)
             .Select(_ => new {Number = int.Parse(_[1].Value), Input = _[2].Value.Replace(",", string.Empty)})
             .Select(_ => new {_.Number, Groups = SecondGeneratedRegex().Matches(_.Input).Select(match => match.Groups)})
@@ -49,7 +31,22 @@ public partial class Instructions(int year, int day) : Abstractions.Instructions
                     .ToDictionary(key => key.Section, value => value.Value)
             ))
             .ToArray();
-    }
+
+    public override object PerformPartOne() =>
+        _input
+            .Single(_ => _.Sections.All(kvp => _sections.First(s => s.Name == kvp.Key).Value == kvp.Value))
+            .Number;
+
+    public override object PerformPartTwo() =>
+        _input
+            .Single(_ => _.Sections.All(kvp =>
+            {
+                var section = _sections.First(s => s.Name == kvp.Key);
+                return !section.Greater && !section.Fewer && section.Value == kvp.Value
+                    || section.Greater && section.Value < kvp.Value
+                    || section.Fewer && section.Value > kvp.Value;
+            }))
+            .Number;
 
     [GeneratedRegex(@"^Sue (\d+): ([\w:, ]+)")]
     private static partial Regex FirstGeneratedRegex();

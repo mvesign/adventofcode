@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace AdventOfCode.Year2015.Days.Day17;
 
-public class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public class Instructions() : Abstractions.Instructions(year: 2015, day: 17)
 {
     private int[] _input = [];
 
     private const int liters = 150;
 
-    public override object PerformPartOne()
-        => GetCombinations([], _input, liters).ToArray().Length;
+    public override void LoadInput() =>
+        _input = ReadAllLines()
+            .Select(int.Parse)
+            .ToArray();
+
+    public override object PerformPartOne() =>
+        GetCombinations([], _input, liters).ToArray().Length;
 
     public override object PerformPartTwo()
     {
@@ -39,9 +43,4 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
                 yield return combinations;
         }
     }
-
-    protected override void LoadInput(string filePath)
-        => _input = File.ReadAllLines(filePath)
-            .Select(int.Parse)
-            .ToArray();
 }

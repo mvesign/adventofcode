@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Days.Day21;
 
-public class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public class Instructions() : Abstractions.Instructions(year: 2015, day: 21)
 {
     private readonly Equipment[] weapons =
     [
@@ -33,23 +33,23 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
         new(0, 0, 0)
     ];
 
-    public override object PerformPartOne()
-        => PermutePlayers()
-            .Where(_ => Fight(_, GetBoss()))
-            .Min(_ => _.Cost);
-
-    public override object PerformPartTwo()
-        =>  PermutePlayers()
-            .Where(_ => !Fight(_, GetBoss()))
-            .Max(_ => _.Cost);
-
-    protected override void LoadInput(string filePath)
+    public override void LoadInput()
     {
         // Let's do nothing here this time.
     }
 
-    private Person GetBoss()
-        => new()
+    public override object PerformPartOne() =>
+        PermutePlayers()
+            .Where(_ => Fight(_, GetBoss()))
+            .Min(_ => _.Cost);
+
+    public override object PerformPartTwo() =>
+        PermutePlayers()
+            .Where(_ => !Fight(_, GetBoss()))
+            .Max(_ => _.Cost);
+
+    private static Person GetBoss() =>
+        new()
         {
             HitPoints = 104,
             Damage = 8,

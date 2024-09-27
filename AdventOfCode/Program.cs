@@ -29,11 +29,10 @@ internal static class Program
             return;
         }
 
-        var instructions = GetInstructions(options.Year.Value, options.Day.Value);
-        if (instructions == null)
+        if (!TryGetInstructions(options.Year.Value, options.Day.Value, out var instructions))
             return;
 
-        instructions.LoadInput();
+        instructions!.LoadInput();
 
         Console.WriteLine(
             instructions.PerformPartOne()
@@ -43,25 +42,27 @@ internal static class Program
         );
     }
 
-    static void HandleErrors(IEnumerable<Error> errors)
+    private static void HandleErrors(IEnumerable<Error> errors)
         => errors.ToList().ForEach(error => Console.WriteLine($"ERROR: {error}"));
     
-    static Instructions? GetInstructions(int year, int day)
+    private static bool TryGetInstructions(int year, int day, out Instructions instructions)
     {
+        instructions = null;
+
         var type = Type.GetType($"AdventOfCode.Year{year}.Days.Day{day:00}.Instructions, AdventOfCode.Year{year}");
         if (type == null)
         {
             Console.WriteLine($"ERROR: No instructions found for year '{year}' and day '{day:00}'");
-            return null;
+            return false;
         }
 
-        var instructions = (Instructions?)Activator.CreateInstance(type, [year, day]);
+        instructions = (Instructions)Activator.CreateInstance(type);
         if (instructions == null)
         {
             Console.WriteLine($"ERROR: Could not create instructions for year '{year}' and day '{day:00}'");
-            return null;
+            return false;
         }
 
-        return instructions;
+        return true;
     }
 }

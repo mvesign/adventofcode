@@ -1,25 +1,24 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Year2015.Days.Day09;
 
-public partial class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public partial class Instructions() : Abstractions.Instructions(year: 2015, day: 9)
 {
     private Route[] _input = [];
 
-    public override object PerformPartOne()
-        => GetDistances().Min();
-
-    public override object PerformPartTwo()
-        => GetDistances().Max();
-
-    protected override void LoadInput(string filePath)
-        => _input = File.ReadAllLines(filePath)
+    public override void LoadInput() =>
+        _input = ReadAllLines()
             .Select(_ => GeneratedRegex().Match(_).Groups)
             .Select(_ => new Route(_[1].Value, _[2].Value, int.Parse(_[3].Value)))
             .ToArray();
+
+    public override object PerformPartOne() =>
+        GetDistances().Min();
+
+    public override object PerformPartTwo() =>
+        GetDistances().Max();
 
     private int[] GetDistances()
     {

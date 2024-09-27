@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace AdventOfCode.Year2015.Days.Day18;
 
-public class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public class Instructions() : Abstractions.Instructions(year: 2015, day: 18)
 {
     private string[] _input = [];
 
     private const int depth = 100;
     private const int steps = 100;
+
+    public override void LoadInput() =>
+        _input = ReadAllLines();
 
     public override object PerformPartOne()
     {
@@ -60,9 +62,6 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
         return CountActiveLights(lights);
     }
 
-    protected override void LoadInput(string filePath)
-        => _input = File.ReadAllLines(filePath);
-
     private static bool[,] ParseLines(IReadOnlyList<string> lines)
     {
         var lightsArray = new bool[depth, depth];
@@ -74,8 +73,8 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
         return lightsArray;
     }
 
-    private static int GetActiveNeighbors(bool[,] lights, int i, int j)
-        => new[]
+    private static int GetActiveNeighbors(bool[,] lights, int i, int j) =>
+        new[]
         {
             // One row above
             i > 0 && j > 0 && lights[i - 1, j - 1],
@@ -91,8 +90,8 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
         }
         .Count(_ => _);
 
-    private static int CountActiveLights(bool[,] lights)
-        => lights
+    private static int CountActiveLights(bool[,] lights) =>
+        lights
             .Cast<bool>()
             .Count(_ => _);
 }

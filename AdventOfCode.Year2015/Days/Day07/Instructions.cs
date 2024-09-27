@@ -4,12 +4,18 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Days.Day07;
 
-public class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public class Instructions() : Abstractions.Instructions(year: 2015, day: 7)
 {
     private string _filePath = string.Empty;
 
-    public override object PerformPartOne()
-        => GetSignal(GetInstructions(), "a");
+    public override void LoadInput()
+    {
+        // Not actual loading the input here, but storing the filepath for later reference.
+        _filePath = GetInputFilePath();
+    }
+
+    public override object PerformPartOne() =>
+        GetSignal(GetInstructions(), "a");
 
     public override object PerformPartTwo()
     {
@@ -21,18 +27,12 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
         return GetSignal(instructions, "a");
     }
 
-    protected override void LoadInput(string filePath)
-    {
-        // Not actual loading the input here, but storing the filepath for later reference.
-        _filePath = filePath;
-    }
-
-    private IDictionary<string, string[]> GetInstructions()
-        => File.ReadAllLines(_filePath)
+    private Dictionary<string, string[]> GetInstructions() =>
+        File.ReadAllLines(_filePath)
             .Select(x => x.Split(' '))
             .ToDictionary(x => x.Last());
 
-    private static int GetSignal(IDictionary<string, string[]> instructions, string input)
+    private static int GetSignal(Dictionary<string, string[]> instructions, string input)
     {
         int Evaluate(string x) =>
             char.IsLetter(x[0]) ? GetSignal(instructions, x) : int.Parse(x);
@@ -48,7 +48,7 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
             _ => ~Evaluate(instruction[1]) // Otherwise it is the NOT operator.
         };
 
-        instructions[input] = new[] { signal.ToString(), "->", input };
+        instructions[input] = [signal.ToString(), "->", input];
 
         return signal;
     }

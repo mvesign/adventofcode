@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
@@ -10,23 +9,23 @@ namespace AdventOfCode.Year2015.Days.Day12;
 #pragma warning disable CS8604
 #pragma warning disable CS8622
 
-public partial class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public partial class Instructions() : Abstractions.Instructions(year: 2015, day: 12)
 {
     private string _input = string.Empty;
 
-    public override object PerformPartOne()
-        => GeneratedRegex()
+    public override void LoadInput() =>
+        _input = ReadAllText();
+
+    public override object PerformPartOne() =>
+        GeneratedRegex()
             .Matches(_input)
             .Select(_ => int.Parse(_.Value))
             .Sum();
 
-    public override object PerformPartTwo()
-        => SumNumbers(
+    public override object PerformPartTwo() =>
+        SumNumbers(
             JsonSerializer.Deserialize<JsonNode>(_input)
         );
-
-    protected override void LoadInput(string filePath)
-        => _input = File.ReadAllText(filePath);
 
     private long SumNumbers(JsonNode jsonNode) =>
         jsonNode switch
@@ -37,8 +36,8 @@ public partial class Instructions(int year, int day) : Abstractions.Instructions
             _ => 0
         };
 
-    private static bool ContainsRed(JsonObject jsonObject)
-        => jsonObject
+    private static bool ContainsRed(JsonObject jsonObject) =>
+        jsonObject
             .Select(_ => _.Value)
             .OfType<JsonValue>()
             .Any(_ => _.TryGetValue(out string value) && string.Equals(value, "red"));

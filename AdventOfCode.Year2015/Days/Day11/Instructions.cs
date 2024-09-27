@@ -1,13 +1,15 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Year2015.Days.Day11;
 
-public partial class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public partial class Instructions() : Abstractions.Instructions(year: 2015, day: 11)
 {
     private string _input = string.Empty;
+
+    public override void LoadInput() =>
+        _input = ReadAllText();
 
     public override object PerformPartOne()
     {
@@ -18,9 +20,6 @@ public partial class Instructions(int year, int day) : Abstractions.Instructions
 
     public override object PerformPartTwo()
         => Perform(_input); // And here we just return it, because we no longer need to reuse it.
-
-    protected override void LoadInput(string filePath)
-        => _input = File.ReadAllText(filePath);
     
     private static string Perform(string input)
     {
@@ -40,24 +39,24 @@ public partial class Instructions(int year, int day) : Abstractions.Instructions
         return (nextCharacter == 'a' ? IncrementPassword(runnerUpCharacters) : runnerUpCharacters) + nextCharacter;
     }
 
-    private static char IncrementCharacter(char input)
-        => input == 'z' ? 'a' : (char)(Convert.ToUInt16(input) + 1);
+    private static char IncrementCharacter(char input) =>
+        input == 'z' ? 'a' : (char)(Convert.ToUInt16(input) + 1);
 
-    private static bool IsValidPassword(string input)
-        => ContainStraightIncreasingSymbols(input)
-            && ContainsRestrictedCharacters(input)
-            && ContainsTwoNonOverlappingPairs(input);
+    private static bool IsValidPassword(string input) =>
+        ContainStraightIncreasingSymbols(input)
+        && ContainsRestrictedCharacters(input)
+        && ContainsTwoNonOverlappingPairs(input);
 
-    private static bool ContainStraightIncreasingSymbols(string input)
-        => Enumerable.Range(0, input.Length - 2)
+    private static bool ContainStraightIncreasingSymbols(string input) =>
+        Enumerable.Range(0, input.Length - 2)
             .Select(_ => input.Substring(_, 3))
             .Any(_ => _[0] + 1 == _[1] && _[1] + 1 == _[2]);
 
-    private static bool ContainsRestrictedCharacters(string input)
-        => input.IndexOfAny(['i', 'o', 'l']) < 0;
+    private static bool ContainsRestrictedCharacters(string input) =>
+        input.IndexOfAny(['i', 'o', 'l']) < 0;
 
-    private static bool ContainsTwoNonOverlappingPairs(string input)
-        => GeneratedRegex().IsMatch(input);
+    private static bool ContainsTwoNonOverlappingPairs(string input) =>
+        GeneratedRegex().IsMatch(input);
 
     [GeneratedRegex(@"([a-z])\1.*([a-z])\2")]
     private static partial Regex GeneratedRegex();

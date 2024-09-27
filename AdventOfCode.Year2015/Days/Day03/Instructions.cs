@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 
 namespace AdventOfCode.Year2015.Days.Day03;
 
-public class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public class Instructions() : Abstractions.Instructions(year: 2015, day: 3)
 {
     private readonly List<(int, int)> _houses = [];
     private string _input = string.Empty;
+
+    public override void LoadInput() =>
+        _input = ReadAllText();
 
     public override object PerformPartOne()
     {
@@ -37,9 +39,6 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
         return _houses.Count;
     }
 
-    protected override void LoadInput(string filePath)
-        => _input = File.ReadAllText(filePath);
-
     private (int x, int y) ProcessDirection((int x, int y) current, char direction)
     {
         if (!_houses.Contains(current))
@@ -48,8 +47,8 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
         return NextHouse(current.x, current.y, direction);
     }
 
-    private static (int x, int y) NextHouse(int x, int y, char direction)
-        => direction switch
+    private static (int x, int y) NextHouse(int x, int y, char direction) =>
+        direction switch
         {
             '^' => (x, y + 1),
             '>' => (x + 1, y),

@@ -5,11 +5,17 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Year2015.Days.Day06;
 
-public class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public class Instructions() : Abstractions.Instructions(year: 2015, day: 6)
 {
     private Instruction[] _input = [];
 
     private const string pattern = @"^(.+) (\d+),(\d+) through (\d+),(\d+)$";
+
+    public override void LoadInput() =>
+        _input = ReadAllLines()
+            .Select(_ => Regex.Match(_, pattern).Groups)
+            .Select(_ => new Instruction(ParseType(_[1].Value), int.Parse(_[2].Value), int.Parse(_[3].Value), int.Parse(_[4].Value), int.Parse(_[5].Value)))
+            .ToArray();
 
     public override object PerformPartOne()
     {
@@ -38,14 +44,8 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
         return grid.Sum();
     }
 
-    protected override void LoadInput(string filePath)
-        => _input = File.ReadAllLines(filePath)
-            .Select(_ => Regex.Match(_, pattern).Groups)
-            .Select(_ => new Instruction(ParseType(_[1].Value), int.Parse(_[2].Value), int.Parse(_[3].Value), int.Parse(_[4].Value), int.Parse(_[5].Value)))
-            .ToArray();
-
-    private static int ParseType(string type)
-        => type switch
+    private static int ParseType(string type) =>
+        type switch
         {
             "turn off" => 0,
             "turn on" => 1,

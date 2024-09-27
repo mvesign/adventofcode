@@ -5,20 +5,18 @@ using System.Text;
 
 namespace AdventOfCode.Year2015.Days.Day04;
 
-public class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public class Instructions() : Abstractions.Instructions(year: 2015, day: 4)
 {
     private string _input = string.Empty;
 
-    public override object PerformPartOne()
-        => Calculate(new string('0', 5));
+    public override void LoadInput() =>
+        _input = ReadAllText();
 
-    public override object PerformPartTwo()
-        => Calculate(new string('0', 6));
+    public override object PerformPartOne() =>
+        Calculate(new string('0', 5));
 
-    protected override void LoadInput(string filePath)
-    {
-        _input = File.ReadAllText(filePath);
-    }
+    public override object PerformPartTwo() =>
+        Calculate(new string('0', 6));
 
     private int Calculate(string startingValue)
     {

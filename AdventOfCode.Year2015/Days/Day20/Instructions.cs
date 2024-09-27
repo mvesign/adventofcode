@@ -3,10 +3,15 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Days.Day20;
 
-public class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public class Instructions() : Abstractions.Instructions(year: 2015, day: 20)
 {
     private const int _input = 29000000;
     private const int _numberOfHouses = 1000000;
+
+    public override void LoadInput()
+    {
+        // Let's do nothing here this time.
+    }
 
     public override object PerformPartOne()
     {
@@ -34,13 +39,8 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
         return GetLowestHouseNumber(houses);
     }
 
-    protected override void LoadInput(string filePath)
-    {
-        // Let's do nothing here this time.
-    }
-
-    private static int GetLowestHouseNumber(IEnumerable<int> houses)
-        => houses
+    private static int GetLowestHouseNumber(IEnumerable<int> houses) =>
+        houses
             .Select((value, index) => new
             {
                 Index = index,

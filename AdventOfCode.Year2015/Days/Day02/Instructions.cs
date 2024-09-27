@@ -3,9 +3,12 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Days.Day02;
 
-public class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public class Instructions() : Abstractions.Instructions(year: 2015, day: 2)
 {
     private string[] _input = [];
+
+    public override void LoadInput()
+        => _input = ReadAllLines();
 
     public override object PerformPartOne()
         => _input
@@ -20,7 +23,4 @@ public class Instructions(int year, int day) : Abstractions.Instructions(year, d
             .Select(_ => _.OrderBy(x => x).ToArray())
             .Select(_ => 2 * _[0] + 2 * _[1] + _[0] * _[1] * _[2])
             .Sum();
-
-    protected override void LoadInput(string filePath)
-        => _input = File.ReadAllLines(filePath);
 }

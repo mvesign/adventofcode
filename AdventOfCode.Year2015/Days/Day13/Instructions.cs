@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Year2015.Days.Day13;
 
-public partial class Instructions(int year, int day) : Abstractions.Instructions(year, day)
+public partial class Instructions() : Abstractions.Instructions(year: 2015, day: 13)
 {
     private List<Person> _input = [];
 
     private const string name = "Maikel";
 
-    public override object PerformPartOne()
-        => GetMaxUnits();
+    public override object PerformPartOne() =>
+        GetMaxUnits();
 
     public override object PerformPartTwo()
     {
@@ -28,13 +27,13 @@ public partial class Instructions(int year, int day) : Abstractions.Instructions
         return GetMaxUnits();
     }
 
-    protected override void LoadInput(string filePath)
-        => _input = File.ReadAllLines(filePath)
+    public override void LoadInput() =>
+        _input = ReadAllLines()
             .Select(_ => GeneratedRegex().Match(_).Groups)
             .Select(_ => new Person(_[1].Value, _[4].Value, int.Parse(_[3].Value) * (string.Equals(_[2].Value, "lose") ? -1 : 1)))
             .ToList();
 
-    private IEnumerable<IEnumerable<string>> Permute(IEnumerable<string> sequence)
+    private static IEnumerable<IEnumerable<string>> Permute(IEnumerable<string> sequence)
     {
         var list = sequence.ToList();
         if (list.Count == 0)
