@@ -8,5 +8,5 @@
   <ItemGroup>
     <ProjectReference Include="..\AdventOfCode.Abstractions\AdventOfCode.Abstractions.csproj" />
   </ItemGroup>
-  
+
 </Project>

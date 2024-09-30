@@ -37,6 +37,9 @@ internal static class Program
         Console.WriteLine(
             instructions.PerformPartOne()
         );
+
+        instructions.Reset();
+
         Console.WriteLine(
             instructions.PerformPartTwo()
         );

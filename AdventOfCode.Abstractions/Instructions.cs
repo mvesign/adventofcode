@@ -11,6 +11,11 @@ public abstract class Instructions(int year, int day)
 
     public abstract object PerformPartOne();
 
+    public virtual void Reset()
+    {
+        // By default we do nothing.
+    }
+
     public abstract object PerformPartTwo();
     
     protected string ReadAllText()
