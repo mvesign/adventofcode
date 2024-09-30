@@ -7,7 +7,10 @@ public abstract class Instructions(int year, int day)
     protected int Year = year;
     protected int Day = day;
 
-    public abstract void LoadInput();
+    public virtual void LoadInput()
+    {
+        // By default we do nothing.
+    }
 
     public abstract object PerformPartOne();
 
