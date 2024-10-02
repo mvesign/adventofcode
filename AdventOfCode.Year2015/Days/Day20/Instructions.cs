@@ -8,11 +8,6 @@ public class Instructions() : Abstractions.Instructions(year: 2015, day: 20)
     private const int _input = 29000000;
     private const int _numberOfHouses = 1000000;
 
-    public override void LoadInput()
-    {
-        // Let's do nothing here this time.
-    }
-
     public override object PerformPartOne()
     {
         const int presentsPerElf = 10;

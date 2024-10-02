@@ -10,6 +10,12 @@ public partial class Instructions() : Abstractions.Instructions(year: 2015, day:
 
     private const string name = "Maikel";
 
+    public override void LoadInput() =>
+        _input = ReadAllLines()
+            .Select(_ => GeneratedRegex().Match(_).Groups)
+            .Select(_ => new Person(_[1].Value, _[4].Value, int.Parse(_[3].Value) * (string.Equals(_[2].Value, "lose") ? -1 : 1)))
+            .ToList();
+
     public override object PerformPartOne() =>
         GetMaxUnits();
 
@@ -26,12 +32,6 @@ public partial class Instructions() : Abstractions.Instructions(year: 2015, day:
 
         return GetMaxUnits();
     }
-
-    public override void LoadInput() =>
-        _input = ReadAllLines()
-            .Select(_ => GeneratedRegex().Match(_).Groups)
-            .Select(_ => new Person(_[1].Value, _[4].Value, int.Parse(_[3].Value) * (string.Equals(_[2].Value, "lose") ? -1 : 1)))
-            .ToList();
 
     private static IEnumerable<IEnumerable<string>> Permute(IEnumerable<string> sequence)
     {

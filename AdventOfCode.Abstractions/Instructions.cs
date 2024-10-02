@@ -12,12 +12,12 @@ public abstract class Instructions(int year, int day)
         // By default we do nothing.
     }
 
-    public abstract object PerformPartOne();
-
     public virtual void Reset()
     {
         // By default we do nothing.
     }
+
+    public abstract object PerformPartOne();
 
     public abstract object PerformPartTwo();
     

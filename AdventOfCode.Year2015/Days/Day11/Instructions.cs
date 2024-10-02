@@ -18,8 +18,9 @@ public partial class Instructions() : Abstractions.Instructions(year: 2015, day:
         return _input;
     }
 
-    public override object PerformPartTwo()
-        => Perform(_input); // And here we just return it, because we no longer need to reuse it.
+    public override object PerformPartTwo() =>
+        // And here we just return it, because we no longer need to reuse it.
+        Perform(_input);
     
     private static string Perform(string input)
     {

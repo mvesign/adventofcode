@@ -33,11 +33,6 @@ public class Instructions() : Abstractions.Instructions(year: 2015, day: 21)
         new(0, 0, 0)
     ];
 
-    public override void LoadInput()
-    {
-        // Let's do nothing here this time.
-    }
-
     public override object PerformPartOne() =>
         PermutePlayers()
             .Where(_ => Fight(_, GetBoss()))

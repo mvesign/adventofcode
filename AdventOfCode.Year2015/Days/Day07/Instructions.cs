@@ -8,11 +8,9 @@ public class Instructions() : Abstractions.Instructions(year: 2015, day: 7)
 {
     private string _filePath = string.Empty;
 
-    public override void LoadInput()
-    {
+    public override void LoadInput() =>
         // Not actual loading the input here, but storing the filepath for later reference.
         _filePath = GetInputFilePath();
-    }
 
     public override object PerformPartOne() =>
         GetSignal(GetInstructions(), "a");

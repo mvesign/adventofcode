@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -21,13 +20,17 @@ public partial class Instructions() : Abstractions.Instructions(year: 2016, day:
     private int[] _progress = [0, 0];
     private string _direction = StartDirection;
     
-    public override void LoadInput()
-    {
+    public override void LoadInput() =>
         _input = ReadAllText()
             .Split(", ")
             .Select(_ => GeneratedRegex().Match(_).Groups)
             .Select(_ => (_[1].Value, int.Parse(_[2].Value)))
             .ToArray();
+
+    public override void Reset()
+    {
+        _progress = [0, 0];
+        _direction = StartDirection;
     }
 
     public override object PerformPartOne()
@@ -47,15 +50,33 @@ public partial class Instructions() : Abstractions.Instructions(year: 2016, day:
         return _progress.Sum(number => number < 0 ? -number : number);
     }
 
-    public override void Reset()
-    {
-        _progress = [0, 0];
-        _direction = StartDirection;
-    }
-
     public override object PerformPartTwo() 
     {
-        throw new NotImplementedException();
+        List<int[]> locations = [];
+
+        foreach (var action in _input)
+        {
+            UpdateDirection(action.Action);
+            
+            foreach (var step in Enumerable.Range(0, action.Steps))
+            {
+                //NOT CORRECT YET
+                _ = _direction switch
+                {
+                    "N" => _progress[0]++,
+                    "E" => _progress[1]++,
+                    "S" => _progress[0]--,
+                    _ => _progress[1]--
+                };
+                
+                if (locations.Contains(_progress))
+                    return _progress.Sum(number => number < 0 ? -number : number);
+
+                locations.Add(_progress);
+            };
+        }
+
+        return "INVALID";
     }
 
     private void UpdateDirection(string action) =>

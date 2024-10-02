@@ -7,8 +7,7 @@ public class Instructions() : Abstractions.Instructions(year: 2017, day: 2)
 {
     private int[][] _input = [];
 
-    public override void LoadInput()
-    {
+    public override void LoadInput() =>
         _input = ReadAllLines()
             .Select(line =>
                 line
@@ -16,7 +15,6 @@ public class Instructions() : Abstractions.Instructions(year: 2017, day: 2)
                     .Select(number => int.Parse(number))
                     .ToArray())
             .ToArray();
-    }
 
     public override object PerformPartOne() =>
         _input.Sum(numbers => numbers.Max() - numbers.Min());

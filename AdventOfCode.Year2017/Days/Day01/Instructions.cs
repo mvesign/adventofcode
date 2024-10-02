@@ -8,12 +8,10 @@ public class Instructions() : Abstractions.Instructions(year: 2017, day: 1)
 {
     private int[] _input = [];
 
-    public override void LoadInput()
-    {
+    public override void LoadInput() =>
         _input = ReadAllText()
             .Select(digit => int.Parse($"{digit}"))
             .ToArray();
-    }
 
     public override object PerformPartOne() =>
         GetCaptchaValues((index) =>
