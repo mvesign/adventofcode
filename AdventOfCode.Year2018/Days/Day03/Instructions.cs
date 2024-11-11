@@ -13,7 +13,6 @@ public partial class Instructions() : Abstractions.Instructions(year: 2018, day:
             .Select(ToClaim)
             .ToArray();
 
-    //TODO Not correct yet
     public override object PerformPartOne() 
     {
         var positions = new Dictionary<long, int>();
@@ -36,7 +35,6 @@ public partial class Instructions() : Abstractions.Instructions(year: 2018, day:
         return positions.Count(p => p.Value > 1);
     }
 
-    //TODO Not correct yet
     public override object PerformPartTwo() 
     {
         var grid = new int[1000, 1000];
@@ -70,12 +68,13 @@ public partial class Instructions() : Abstractions.Instructions(year: 2018, day:
     {
         var values = GeneratedRegex().Match(claim).Groups
             .Cast<Group>()
+            .Skip(1)
             .Select(g => int.Parse(g.Value))
             .ToArray();
 
         return new Claim(values[0], values[1], values[2], values[3], values[4]);
     }
 
-    [GeneratedRegex(@"^#(?<id>\d+) @ (?<start>\d+),(?<end>\d+): (?<width>\d+)x(?<height>\d+)$")]
+    [GeneratedRegex(@"^#(?<Id>\d+) @ (?<Start>\d+),(?<End>\d+): (?<Width>\d+)x(?<Height>\d+)$")]
     private static partial Regex GeneratedRegex();
 }
