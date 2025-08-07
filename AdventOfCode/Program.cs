@@ -45,8 +45,8 @@ internal static class Program
         );
     }
 
-    private static void HandleErrors(IEnumerable<Error> errors)
-        => errors.ToList().ForEach(error => Console.WriteLine($"ERROR: {error}"));
+    private static void HandleErrors(IEnumerable<Error> errors) =>
+        errors.ToList().ForEach(error => Console.WriteLine($"ERROR: {error}"));
     
     private static bool TryGetInstructions(int year, int day, out Instructions instructions)
     {
