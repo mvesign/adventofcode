@@ -19,6 +19,9 @@ public class Instructions() : Abstractions.Instructions(year: 2015, day: 22)
         );
     }
 
+    public override void Reset() =>
+        LoadInput();
+
     public override object PerformPartOne() =>
         Play(false);
 
